@@ -1,0 +1,55 @@
+
+
+NEEDS "strings"
+GET "LIBHDR"
+GET "STRHDR"
+
+LET START() BE
+$(
+   LET l = 0
+   LET s,t = "Hello there," , " World!"
+   LET target = GETVEC(concatSize(s,t))
+   LET leftTest = GETVEC(5)
+   LET rightTest = GETVEC(5)
+   LET midTest = GETVEC(5)
+   LET index = 0
+
+   WRITES("indexOf test (should be 7)*N")
+   index :=indexOf("String search"," sear")
+   WRITEN(index)
+   WRITES("*N")
+
+   WRITES("Mid test (should be text) *N")
+   midTest := MID("Some texty to test",5,4)
+   WRITES(midtest)
+   WRITES("*N")
+
+   WRITES("Right test (should be to test)*N")
+   rightTest := RIGHT("Some more text to test",7)
+   WRITES(rightTest)
+   WRITES("*N")
+
+
+   WRITES("Left test (should be Test this)*N")
+   target := concat(s,t)
+
+   leftTest := LEFT("Test this string for left 5",9)
+   WRITES(leftTest)
+   WRITES("*N")
+
+   WRITES("Concat test (should be Hello there, World)*N")
+   WRITES(target)
+
+   WRITES("*N")
+
+   l := LENGTH("string test take 2")
+   WRITEN(l)
+
+
+
+$)
+
+
+
+
+

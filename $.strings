@@ -1,0 +1,181 @@
+SECTION "STRINGS"
+
+// Various string functions
+//
+// 27/03/2016 PJ
+//
+// V1.01
+// length(string) - returns a length in bytes
+// concatSize(string1,string2) - returns the required vector size
+// concat(string1,string2) - joins two strings and returns a vector
+// left(string,length) - returns 'length' number of characters
+// right(string,length)
+// mid(string,start point,length) start point is 0 based
+// indexOf(string,find string) returns zero based position
+
+//let STARTINIT()=3000
+
+//example usage: -
+//let s,t = "Hello there,"," Worldy!"
+//let target = GETVEC(concatSize(s,t))
+//let leftTest = GETVEC(5)
+//target := concat(s,t)
+//writes(target)
+//let leftTest = GETVEC(10)
+//leftTest := left(target,30)
+//writes(leftTest)
+
+GET "LIBHDR"
+GET "SYSHDR"
+GET "STRHDR"
+
+let length(S) = VALOF
+$(
+   RESULTIS S%0 //size of string in bytes is held in byte 0
+$)
+
+let concatSize(S,T) = VALOF
+$(
+   //takes two strings and returns the length divided by 2
+   //this is the size of the vector to hold the results
+   RESULTIS (S%0 + T%0)/2
+$)
+
+and concat(S,T) = VALOF
+$(
+   let size, vector, ScharCount, TcharCount = 0,0,0,0
+
+   size := concatSize(S,T)*2  //get the size of the total string (this is a VEC size so *2)
+   ScharCount := S%0
+   TcharCount := T%0
+
+   vector := GETVEC(size)
+
+   //loop through the first string and add it to the new vctor
+
+   FOR N = 0 TO ScharCount DO
+      vector%N := S%N
+
+   FOR N = ScharCount+1 TO Size DO
+      vector%(N) :=T%(N-ScharCount)
+
+   vector%0 := Size
+
+   RESULTIS vector
+
+$)
+
+let left(S,L) = VALOF
+$(
+   //return the left ## number of characters
+   //if ## is greater than string size return the string as is
+
+   let size, vector = 0,0
+
+   size := S%0
+
+   IF size < L THEN L :=size
+
+   vector := GETVEC(L/2)
+
+   FOR N = 0 TO L DO
+      vector%N := S%N
+
+   vector%0 :=L
+
+   RESULTIS vector
+
+$)
+
+let right(S,R) = VALOF
+$(
+   //return the right ## number of characters
+   let size, vector, startPoint = 0,0,0
+
+   size := S%0
+
+   IF R > size THEN R :=size
+
+   startPoint := size - R
+
+   vector := GETVEC(R/2)
+
+   FOR N = startPoint TO size DO
+      vector%(N-startPoint) :=S%N
+
+   vector%0 :=R
+
+   RESULTIS vector
+
+$)
+
+
+let mid(S,SP,LN) = VALOF
+$(
+   //return the LN ## number of characters from S starting at SP (start point)
+   //note that the starting point is zero based
+   let size, vector = 0,0
+
+   size := S%0
+
+   IF SP >= size THEN
+      $( SP :=size
+         LN :=0
+      $)
+
+   IF (SP + LN) > size THEN
+      LN := size - SP
+
+   vector :=GETVEC(LN/2)
+
+   FOR N = SP TO (SP+LN) DO
+      vector%(N-SP) := S%N
+
+   vector%0 := LN
+
+   RESULTIS vector
+
+$)
+
+
+let indexOf(S,FS) = VALOF
+$(
+   //returns the zero based index of the first instance of FS (find string)
+   //in S (string) or -1 if not found
+
+   let index, found = -1,0
+
+   //step through the S string and test the first char of FS
+   //if it matches try the next one
+   //if not move on to the next char in S
+
+   FOR N = 1 TO (S%0 - ((FS%0)-1)) DO
+      $(
+         //step through S
+         found  := 0
+
+         FOR C = 1 TO FS%0
+            $(
+               //step through FS until no match is found
+               TEST FS%C = S%(N+(C-1)) THEN
+                  found := found + 1
+               ELSE
+                  BREAK
+            $)
+
+            IF found = FS%0 //if the value of found equals the length of the find string we have found everything
+            $(
+               index := N
+               BREAK
+            $)
+      $)
+
+
+   RESULTIS index
+
+
+$)
+.
+
+
+

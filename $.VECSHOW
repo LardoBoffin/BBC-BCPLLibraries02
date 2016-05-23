@@ -1,0 +1,71 @@
+// Display contents of string vector example
+//
+// Filename vecshow
+//
+// Created 19/05/2016
+//
+// V1.00
+//
+// Steps through a vector (string) and shows the contents
+//
+// Uses VDU so will require NEEDCIN
+//
+
+NEEDS "VDU"
+GET "LIBHDR"
+
+LET START() BE
+$(
+   LET stringSample = "Hello world!"
+   LET vector = GETVEC(6)
+   VECTOR := STRINGSAMPLE
+
+   MODE(0)
+
+   SHOWVEC(VECTOR)
+
+$)
+
+AND SHOWVEC(VECTOR) BE
+$(
+   VDU ("31,2,2")
+   //WRITES(stringSample)
+
+   FOR N = 0 TO (vector%0)+1  DO
+   $(
+      VDU ("31,%,%",2,(N+4))
+
+      WRITEN(VECTOR%N)
+
+      VDU ("31,%,%",6,(N+4))
+
+      IF N=0 DO
+         $(
+            WRITES("Length of string")
+         $)
+
+      IF VECTOR%N >31 & VECTOR%0 <127 & N>0 DO
+         $(
+            VDU ("%",VECTOR%N)
+         $)
+
+      IF VECTOR%N = 0 DO
+         $(
+            WRITES("Terminator")
+         $)
+   $)
+
+   WRITES("*N")
+
+
+$)
+
+
+
+
+
+
+
+
+
+
