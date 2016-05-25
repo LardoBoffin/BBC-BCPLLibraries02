@@ -78,6 +78,7 @@ The string function 'left' illustrates a lot of points about using vectors as st
 2 - this extracts the size of the string (S) passed into the function as the 0th byte of the string holds the length in bytes
 
 3 - this is a check to make sure that we don't try to take more characters from the left of the string than are present
+
 4 - calls the GETVEC command to convert the variable 'vector' into an actual vector. Note that the vector size is the numebr of bytes divided by 2 as there are two bytes per BCPL word and there is no point wasting RAM
 
 5 - set the byte of new vector equal to the byte of the original vector (string S). This lookps through L (number of bytes to copy) times
