@@ -4,12 +4,17 @@ More functions and a look at vectors.
 
 This version of the strings library includes the following common string functions: -
 
- . Length
- . Concat
- . Left
- . Right
- . Mid
- . IndexOf
+ . Length 
+ 
+ . Concat 
+ 
+ . Left 
+ 
+ . Right 
+ 
+ . Mid 
+ 
+ . IndexOf 
 
 This compiles in the same way as Libraries 1, from drive 0: - 
 
@@ -43,4 +48,42 @@ To build and run this from drive 0: -
     NEEDCIN veccode lib vecexe
     *destroy veccode
 
-More to follow about vectors!
+The string function 'left' illustrates a lot of points about using vectors as strings: - 
+ 
+    let left(S,L) = VALOF
+    $(
+    //return the left ## number of characters
+    //if ## is greater than string size return the string as is
+    
+1    let size, vector = 0,0
+    
+2    size := S%0
+    
+3    IF size < L THEN L :=size
+    
+4    vector := GETVEC(L/2)
+    
+    FOR N = 0 TO L DO
+5    vector%N := S%N
+    
+6    vector%0 :=L
+    
+7    RESULTIS vector
+    
+    $)
+    
+
+1 - this defines the variables we will use later
+
+2 - this extracts the size of the string (S) passed into the function as the 0th byte of the string holds the length in bytes
+
+3 - this is a check to make sure that we don't try to take more characters from the left of the string than are present
+4 - calls the GETVEC command to convert the variable 'vector' into an actual vector. Note that the vector size is the numebr of bytes divided by 2 as there are two bytes per BCPL word and there is no point wasting RAM
+
+5 - set the byte of new vector equal to the byte of the original vector (string S). This lookps through L (number of bytes to copy) times
+
+6 - set the length of the new vector to L so that if we print the string out or work with it we know where it ends
+
+7 - return the resulting vector to the caller
+
+
