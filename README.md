@@ -55,20 +55,20 @@ The string function 'left' illustrates a lot of points about using vectors as st
     //return the left ## number of characters
     //if ## is greater than string size return the string as is
     
-1    let size, vector = 0,0
+    let size, vector = 0,0 *1
     
-2    size := S%0
+    size := S%0 *2
     
-3    IF size < L THEN L :=size
+    IF size < L THEN L :=size *3
     
-4    vector := GETVEC(L/2)
+    vector := GETVEC(L/2) *4
     
     FOR N = 0 TO L DO
-5    vector%N := S%N
+     vector%N := S%N *5
+     
+     vector%0 :=L *6
     
-6    vector%0 :=L
-    
-7    RESULTIS vector
+    RESULTIS vector *7
     
     $)
     
