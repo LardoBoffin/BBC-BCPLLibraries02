@@ -52,23 +52,23 @@ The string function 'left' illustrates a lot of points about using vectors as st
  
     let left(S,L) = VALOF
     $(
-    //return the left ## number of characters
-    //if ## is greater than string size return the string as is
-    
-    let size, vector = 0,0 *1
-    
-    size := S%0 *2
-    
-    IF size < L THEN L :=size *3
-    
-    vector := GETVEC(L/2) *4
-    
-    FOR N = 0 TO L DO
-     vector%N := S%N *5
+     //return the left ## number of characters
+     //if ## is greater than string size return the string as is
      
-     vector%0 :=L *6
-    
-    RESULTIS vector *7
+     let size, vector = 0,0 *1
+     
+     size := S%0 *2
+     
+     IF size < L THEN L :=size *3
+     
+     vector := GETVEC(L/2) *4
+     
+     FOR N = 0 TO L DO
+      vector%N := S%N *5
+      
+      vector%0 :=L *6
+     
+     RESULTIS vector *7
     
     $)
     
